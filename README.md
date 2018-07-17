@@ -8,7 +8,7 @@
   - [X] The total net amount of "Profit/Losses" over the entire period
   - [X] The average change in "Profit/Losses" between months over the entire period
   - [X] The greatest increase in profits (date and amount) over the entire period
-  - [ ] The greatest decrease in losses (date and amount) over the entire period
+  - [X] The greatest decrease in losses (date and amount) over the entire period
  
 - As an example, your analysis should look similar to the one below:
 ```
@@ -31,7 +31,7 @@
   - [X] A complete list of candidates who received votes
   - [X] The percentage of votes each candidate won
   - [X] The total number of votes each candidate won
-  - [ ] The winner of the election based on popular vote.
+  - [X] The winner of the election based on popular vote.
 
 
 - As an example, your analysis should look similar to the one below:
