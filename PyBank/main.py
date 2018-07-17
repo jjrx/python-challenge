@@ -47,9 +47,9 @@ for change in monthly_changes_list:
 # calculate the average monthly change by dividing the sum of the list by the number of items in the list
 average_change = change_sum/len(monthly_changes_list)
 
-# print results in .txt file
+# display results in .txt file
 output_file = os.path.join("Resources", "PyBank_Results.txt")
-with open(output_file, "w", newline="\n") as datafile:
+with open(output_file, "w") as datafile:
     datafile.writelines([
         "Financial Analysis\n",
         "----------------------------\n",
@@ -61,11 +61,7 @@ with open(output_file, "w", newline="\n") as datafile:
     ])
 
 # print out results in terminal
-print("Financial Analysis")
-print("----------------------------")
-print(f"Total Months: {total_months}")
-print(f"Total: ${sum_revenue}")
-print(f"Average Change: ${average_change}")
-print(f"Greatest Increase in Profits: {greatest_increase_month} (${greatest_increase})")
-print(f"Greatest Decrease in Profits: {greatest_decrease_month} (${greatest_decrease})")
+with open(output_file, "r") as f:
+    results = f.read()
+    print(results)
 
