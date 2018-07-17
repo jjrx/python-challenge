@@ -14,6 +14,7 @@ candidates = election_df["Candidate"].unique().tolist()
 # determine the number of votes per candidate
 votes_per_candidate = election_df["Candidate"].value_counts()
 
+
 # print out results
 largest_num_of_votes = 0
 print("Election Results")
@@ -34,3 +35,17 @@ print("-------------------------")
 print(f"Winner: {winner}")
 print("-------------------------")
 
+
+# print results in .txt file
+output_file = os.path.join("Resources", "PyPoll_Results.txt")
+with open(output_file, "w", newline="\n") as datafile:
+    datafile.writelines([
+        "Election Results\n",
+        "----------------------------\n",
+        f"Total Votes: {total_votes}\n",
+        "----------------------------\n",
+        f"Total: ${sum_revenue}\n",
+        f"Average Change: ${average_change}\n",
+        f"Greatest Increase in Profits: {greatest_increase_month} (${greatest_increase})\n",
+        f"Greatest Decrease in Profits: {greatest_decrease_month} (${greatest_decrease})\n"
+    ])

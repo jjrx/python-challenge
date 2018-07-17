@@ -1,5 +1,6 @@
 # dependencies
 import pandas as pd
+import os
 
 # import budget_data.csv into a dataframe
 file = "Resources/budget_data.csv"
@@ -46,7 +47,20 @@ for change in monthly_changes_list:
 # calculate the average monthly change by dividing the sum of the list by the number of items in the list
 average_change = change_sum/len(monthly_changes_list)
 
-# print out the results
+# print results in .txt file
+output_file = os.path.join("Resources", "PyBank_Results.txt")
+with open(output_file, "w", newline="\n") as datafile:
+    datafile.writelines([
+        "Financial Analysis\n",
+        "----------------------------\n",
+        f"Total Months: {total_months}\n",
+        f"Total: ${sum_revenue}\n",
+        f"Average Change: ${average_change}\n",
+        f"Greatest Increase in Profits: {greatest_increase_month} (${greatest_increase})\n",
+        f"Greatest Decrease in Profits: {greatest_decrease_month} (${greatest_decrease})\n"
+    ])
+
+# print out results in terminal
 print("Financial Analysis")
 print("----------------------------")
 print(f"Total Months: {total_months}")
