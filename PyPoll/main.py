@@ -1,5 +1,6 @@
 # dependences
 import pandas as pd
+import os
 
 # import csv file
 file = "Resources/election_data.csv"
@@ -14,38 +15,37 @@ candidates = election_df["Candidate"].unique().tolist()
 # determine the number of votes per candidate
 votes_per_candidate = election_df["Candidate"].value_counts()
 
-
-# print out results
-largest_num_of_votes = 0
-print("Election Results")
-print("-------------------------")
-print(f"Total Votes: {total_votes}")
-print("-------------------------")
-# for each candidate, display their raw number of votes and their percent of total votes
+# create a dictionary where keys are candidate names and values are a list of candidate's total votes and percent votes
+candidates_dict = {}
 for candidate in candidates:
-    num_of_votes = votes_per_candidate[candidate]
-    percent_of_votes = (num_of_votes/total_votes) * 100
-    # determine the winner by keeping track of which candidate has the largest number of votes
-    if num_of_votes > largest_num_of_votes:
-        largest_num_of_votes = num_of_votes
-        # set the winner variable equal to this candidate since they currently have the most votes
-        winner = candidate 
-    print(f"{candidate}: {percent_of_votes:.3f}% ({num_of_votes})")   
-print("-------------------------")
-print(f"Winner: {winner}")
-print("-------------------------")
+    candidates_dict[candidate] = []
+    # add raw votes per candidate to list
+    candidates_dict[candidate].append(votes_per_candidate[candidate])
+    # add percent votes to list
+    candidates_dict[candidate].append((votes_per_candidate[candidate]/total_votes) * 100)
 
+# determine the winner by iterating over the candidates dictionary and keeping track of which candidate has the most votes
+largest_num_of_votes = 0
+for candidate in candidates_dict:
+    # first item in each key list is the number of votes
+    if candidates_dict[candidate][0] > largest_num_of_votes:
+        largest_num_of_votes = candidates_dict[candidate][0]
+        winner = candidate
 
-# print results in .txt file
+# display results in .txt file
 output_file = os.path.join("Resources", "PyPoll_Results.txt")
-with open(output_file, "w", newline="\n") as datafile:
-    datafile.writelines([
-        "Election Results\n",
-        "----------------------------\n",
-        f"Total Votes: {total_votes}\n",
-        "----------------------------\n",
-        f"Total: ${sum_revenue}\n",
-        f"Average Change: ${average_change}\n",
-        f"Greatest Increase in Profits: {greatest_increase_month} (${greatest_increase})\n",
-        f"Greatest Decrease in Profits: {greatest_decrease_month} (${greatest_decrease})\n"
-    ])
+with open(output_file, "w") as datafile:
+    datafile.write("Election Results\n")
+    datafile.write("----------------------------\n")
+    datafile.write(f"Total Votes: {total_votes}\n")
+    datafile.write("----------------------------\n")
+    for key in candidates_dict:
+        datafile.write(f"{key}: {candidates_dict[key][1]:.3f}% ({candidates_dict[key][0]})\n")
+    datafile.write("----------------------------\n")
+    datafile.write(f"Winner: {winner}\n")
+    datafile.write("----------------------------\n")
+
+# print out contents of .txt file in terminal
+with open(output_file, "r") as f:
+    results = f.read()
+    print(results)
